@@ -20,6 +20,8 @@ import (
 const (
 	roverSpeed = 1000.0
 	thresh     = 500
+	camName    = "intel:depth"
+	baseName   = "viam_base"
 )
 
 func main() {
@@ -27,7 +29,7 @@ func main() {
 	logger := golog.NewDevelopmentLogger("client")
 	robot, err := client.New(
 		context.Background(),
-		// Replace "blah.viam.cloud" with your equivalent
+		// Replace "blah.viam.cloud" with your URL
 		"blah.viam.cloud",
 		logger,
 		client.WithDialOptions(rpc.WithCredentials(rpc.Credentials{
@@ -46,13 +48,13 @@ func main() {
 	logger.Info(robot.ResourceNames())
 
 	// Grab the camera component
-	camComponent, err := camera.FromRobot(robot, "intel:depth")
+	camComponent, err := camera.FromRobot(robot, camName)
 	if err != nil {
 		logger.Error(err)
 	}
 
 	// Grab the base component
-	roverBase, err := base.FromRobot(robot, "viam_base")
+	roverBase, err := base.FromRobot(robot, baseName)
 	if err != nil {
 		logger.Fatalf("cannot get base: %v", err)
 	}
