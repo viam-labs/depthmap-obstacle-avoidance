@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/edaniels/golog v0.0.0-20230215213219-28954395e8d0
-	github.com/edaniels/gostream v0.0.0-20230509190834-366e3941adaa
+	github.com/viamrobotics/gostream 
 	github.com/golang/geo v0.0.0-20210211234256-740aa86cb551
 	go.viam.com/rdk v0.2.50-rc1
 	go.viam.com/utils v0.1.34

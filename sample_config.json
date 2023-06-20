@@ -1,0 +1,140 @@
+{
+    "components": [
+      {
+        "depends_on": [],
+        "model": "pi",
+        "name": "local",
+        "type": "board",
+        "attributes": {
+          "digital_interrupts": [
+            {
+              "name": "re",
+              "pin": "37"
+            },
+            {
+              "name": "le",
+              "pin": "35"
+            }
+          ],
+          "i2cs": [
+            {
+              "bus": "1",
+              "name": "default_i2c_bus"
+            }
+          ]
+        }
+      },
+      {
+        "depends_on": [
+          "local",
+          "Renc"
+        ],
+        "model": "gpio",
+        "name": "right",
+        "type": "motor",
+        "attributes": {
+          "pins": {
+            "pwm": "22",
+            "a": "16",
+            "b": "18"
+          },
+          "ticks_per_rotation": 996,
+          "board": "local",
+          "encoder": "Renc"
+        }
+      },
+      {
+        "attributes": {
+          "encoder": "Lenc",
+          "pins": {
+            "a": "11",
+            "b": "13",
+            "pwm": "15"
+          },
+          "ticks_per_rotation": 996,
+          "board": "local"
+        },
+        "depends_on": [
+          "local",
+          "Lenc"
+        ],
+        "model": "gpio",
+        "name": "left",
+        "type": "motor"
+      },
+      {
+        "model": "wheeled",
+        "name": "viam_base",
+        "type": "base",
+        "attributes": {
+          "right": [
+            "right"
+          ],
+          "spin_slip_factor": 1.76,
+          "wheel_circumference_mm": 217,
+          "width_mm": 260,
+          "left": [
+            "left"
+          ]
+        },
+        "depends_on": [
+          "left",
+          "right",
+          "local"
+        ]
+      },
+      {
+        "model": "webcam",
+        "name": "cam",
+        "type": "camera",
+        "attributes": {
+          "video_path": "video0"
+        },
+        "depends_on": [
+          "local"
+        ]
+      },
+      {
+        "depends_on": [
+          "local"
+        ],
+        "model": "single",
+        "name": "Renc",
+        "type": "encoder",
+        "attributes": {
+          "board": "local",
+          "pins": {
+            "i": "re"
+          }
+        }
+      },
+      {
+        "attributes": {
+          "board": "local",
+          "pins": {
+            "i": "le"
+          }
+        },
+        "depends_on": [
+          "local"
+        ],
+        "model": "single",
+        "name": "Lenc",
+        "type": "encoder"
+      }
+    ],
+    "services": [],
+    "processes": [
+      {
+        "id": "intelproc",
+        "log": true,
+        "name": "/usr/local/bin/intelrealgrpcserver"
+      }
+    ],
+    "remotes": [
+      {
+        "name": "intel",
+        "address": "127.0.0.1:8085"
+      }
+    ]
+  }
